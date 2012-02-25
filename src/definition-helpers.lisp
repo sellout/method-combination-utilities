@@ -12,8 +12,7 @@
     (let ((form (if (or before after (rest primary))
                     `(multiple-value-prog1
                          (progn ,@(call-methods before)
-                                (call-method ,(first primary)
-                                             ,(rest primary)))
+                                (call-method ,(first primary) ,(rest primary)))
                        ,@(call-methods after))
                     `(call-method ,(first primary)))))
       (if around
