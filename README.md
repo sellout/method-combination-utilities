@@ -68,11 +68,13 @@ This example converts the 55-line WRAPPING-STANDARD method combination from [arn
 
 ## Method Combinations
 
-### (BASIC _operator_ _identity-with-one-argument-p_ &optional _order_)
+### (BASIC _operator_ &optional _identity-with-one-argument-p_ _order_)
 
 The intent of the `BASIC` method combination is to obviate the need for the short form of `DEFINE-METHOD-COMBINATION`. With this method combination, you have the same functionality but without having to define the method combination separately from where it's used.
 
 Of course, I've never actually seen any code that uses the short form of `DEFINE-METHOD-COMBINATION` (and I've looked). However, since all the (non-`STANDARD`) built-in method combinations behave as if they were created using the short form, this also acts as a proposal for any updates to Common Lisp – rather than having ten built-in combinations (four of which I have never seen used), have only two: `STANDARD` and `BASIC`, and eliminate the short form of `DEFINE-METHOD-COMBINATION`.
+
+For example, the built-in `+` combination can be replicated with `(basic + t)`.
 
 ### (APPEND/NCONC &optional _order_)
 

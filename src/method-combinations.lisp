@@ -1,8 +1,8 @@
 (in-package #:method-combination-utilities)
 
 (define-method-combination basic
-    (operator identity-with-one-argument-p
-              &optional (order :most-specific-first))
+    (operator
+     &optional identity-with-one-argument-p (order :most-specific-first))
   ((around (:around))
    (primary (*) :order order :required t))
   "This combination removes the need for the built-in combinations (other than
