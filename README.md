@@ -11,8 +11,8 @@ For example, given:
 ```common-lisp
 (defgeneric print-slots (object)
   (:method-combination basic progn t)
-  (:method progn ((object superclass)) …)
-  (:method progn ((object subclass)) …))
+  (:method progn ((object superclass)) ...)
+  (:method progn ((object subclass)) ...))
 
 (pprint (method-combination-expand (print-slots subclass-instance)))
 ```
