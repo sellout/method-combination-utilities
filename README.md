@@ -29,43 +29,6 @@ In a lot of custom method combinations there is some attempt to keep the behavio
 This example converts the 55-line WRAPPING-STANDARD method combination from [arnesi](http://common-lisp.net/project/bese/arnesi.html) into a much cleaner 17-line version.
 
 ```common-lisp
-;; :WRAP-AROUND is similar to :AROUND and :WRAPPING is similar to primary, so
-;; each pair can be concatenated and then we can just apply the standard
-;; combination.
-(define-method-combination wrapping-standard
-    (&key (wrap-around-order :most-specific-last)
-          (around-order :most-specific-first)
-          (before-order :most-specific-first)
-          (wrapping-order :most-specific-last)
-          (primary-order :most-specific-first)
-          (after-order :most-specific-last))
-  ((wrap-around (:wrap-around) :order wrap-around-order)
-   (around (:around) :order around-order)
-   (before (:before) :order before-order)
-   (wrapping (:wrapping) :order wrapping-order)
-   (primary () :order primary-order :required t)
-   (after (:after) :order after-order))
-  "Same semantics as standard method combination but allows
-\"wrapping\" methods. Ordering of methods:
-
- (wrap-around
-   (around
-     (before)
-     (wrapping
-       (primary))
-     (after)))
-
-:warp-around, :around, :wrapping and :primary methods call the
-next least/most specific method via call-next-method (as in
-standard method combination).
-
-The various WHATEVER-order keyword arguments set the order in
-which the methods are called and be set to either
-:most-specific-last or :most-specific-first."
-  (combine-standard-methods (append wrap-around around)
-                            before
-                            (append wrapping primary)
-                            after))
 (define-method-combination wrapping-standard
     (&key (wrap-around-order :most-specific-last)
           (around-order :most-specific-first)
