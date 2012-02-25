@@ -7,6 +7,7 @@ This macro is to method combinations what MACROEXPAND is to macros. Given a func
 **NOTE**: This currently only works for CCL, but I imagine it will be fairly easy to port.
 
 For example, given:
+
 ```common-lisp
 (defgeneric print-slots (object)
   (:method-combination basic progn t)
@@ -15,11 +16,14 @@ For example, given:
 
 (pprint (method-combination-expand (print-slots subclass-instance)))
 ```
+
 the result should look something like:
+
 ```common-lisp
 (PROGN (CALL-METHOD #<STANDARD-METHOD PRINT-SLOTS PROGN (SUBCLASS)>)
        (CALL-METHOD #<STANDARD-METHOD PRINT-SLOTS PROGN (SUPERCLASS)>))
 ```
+
 This can be extremely helpful both for users of method combinations and developers of them.
 
 ## (COMBINE-STANDARD-METHODS _around_ _before_ _primary_ _after_)
