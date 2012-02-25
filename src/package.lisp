@@ -1,9 +1,5 @@
 (defpackage method-combination-utilities
-  (:use #:cl #:closer-mop)
-  (:shadowing-import-from #:closer-mop
-                          #:standard-class
-                          #:standard-generic-function #:defgeneric
-                          #:standard-method #:defmethod)
+  (:use #:closer-common-lisp #:closer-mop)
   (:export #:combine-standard-methods
            #:basic
            #:append/nconc
