@@ -23,7 +23,7 @@
    would be generated in the process of satisfying that call. This is only
    expected to work for functions whose method-combination was created using
    the long form of DEFINE-METHOD-COMBINATION."
-  (let* ((gf (symbol-function (car form)))
+  (let* ((gf (fdefinition (car form)))
          (mc (generic-function-method-combination gf)))
     (method-combination-expansion-form (method-combination-expander-function mc)
                                        gf
