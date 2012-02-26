@@ -66,6 +66,10 @@ This example converts the 55-line WRAPPING-STANDARD method combination from [arn
 
 ## Method Combinations
 
+### (NIL)
+
+The `NIL` method combination is a stripped-down version of the `STANDARD` method combination that _only_ allows primary methods. Taken from ISLISP after it was suggested by Pascal Costanza.
+
 ### (BASIC _operator_ &optional _identity-with-one-argument-p_ _order_)
 
 The intent of the `BASIC` method combination is to obviate the need for the short form of `DEFINE-METHOD-COMBINATION`. With this method combination, you have the same functionality but without having to define the method combination separately from where it's used.
