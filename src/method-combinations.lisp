@@ -55,8 +55,9 @@
   "This is an improvement on the built-in APPEND method combination, which uses
    the short form of DEFINE-METHOD-COMBINATION. This allows either `NCONC` or
   `APPEND` to be used as a qualifier depending on whether or not the method
-   returns a list where the last cons can be modified. If all the primary
-   methods specify `NCONC`, then `NCONC` will be used, otherwise, `APPEND`."
+   returns a list where the last cons can be modified. If all but the last
+   primary methods specify `NCONC`, then `NCONC` will be used, otherwise,
+  `APPEND`."
   (flet ((call-methods (methods)
            (mapcar (lambda (method) `(call-method ,method)) methods)))
     (let ((form (if (rest primary)
