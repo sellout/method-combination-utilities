@@ -4,7 +4,9 @@
   #+ccl (cdr (ccl::method-combination-expander method-combination))
   #+clisp (clos::method-combination-expander method-combination)
   #+cmucl (slot-value method-combination 'pcl::function)
-  #-(or ccl clisp cmucl)
+  #+sbcl (gethash (sb-pcl::method-combination-type-name method-combination)
+                  sb-pcl::*long-method-combination-functions*)
+  #-(or ccl clisp cmucl sbcl)
   (error "this function is not available on ~A" (lisp-implementation-type)))
 
 (defun method-combination-expansion-form (expander gf mc methods)
@@ -14,8 +16,8 @@
                             ,mc
                             ,(clos::method-combination-options mc)
                             ,methods))
-  #+cmucl `(funcall ,expander ,gf ,mc ,methods)
-  #-(or ccl clisp cmucl)
+  #+(or cmucl sbcl) `(funcall ,expander ,gf ,mc ,methods)
+  #-(or ccl clisp cmucl sbcl)
   (error "this function is not available on ~A" (lisp-implementation-type)))
 
 (defmacro method-combination-expand (form)
