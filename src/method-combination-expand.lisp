@@ -33,4 +33,3 @@
                                        `(compute-applicable-methods
                                          ,gf
                                          (list ,@(cdr form))))))
-
