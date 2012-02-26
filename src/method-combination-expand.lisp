@@ -3,7 +3,8 @@
 (defun method-combination-expander-function (method-combination)
   #+ccl (cdr (ccl::method-combination-expander method-combination))
   #+clisp (clos::method-combination-expander method-combination)
-  #-(or ccl clisp)
+  #+cmucl (slot-value method-combination 'pcl::function)
+  #-(or ccl clisp cmucl)
   (error "this function is not available on ~A" (lisp-implementation-type)))
 
 (defun method-combination-expansion-form (expander gf mc methods)
@@ -13,7 +14,8 @@
                             ,mc
                             ,(clos::method-combination-options mc)
                             ,methods))
-  #-(or ccl clisp)
+  #+cmucl `(funcall ,expander ,gf ,mc ,methods)
+  #-(or ccl clisp cmucl)
   (error "this function is not available on ~A" (lisp-implementation-type)))
 
 (defmacro method-combination-expand (form)
