@@ -1,6 +1,6 @@
 (defpackage method-combination-utilities
   (:use #:closer-common-lisp #:closer-mop)
-  (:export #:nil #:basic #:append/nconc
+  (:export #:nil #:lax #:basic #:append/nconc
            #:combine-standard-methods
            #:method-combination-expand))
 

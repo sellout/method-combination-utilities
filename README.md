@@ -68,7 +68,11 @@ This example converts the 55-line WRAPPING-STANDARD method combination from [arn
 
 ### (NIL)
 
-The `NIL` method combination is a stripped-down version of the `STANDARD` method combination that _only_ allows primary methods. Taken from ISLISP after it was suggested by Pascal Costanza.
+The `NIL` method combination is a stripped-down version of the `STANDARD` method combination that _only_ allows primary methods. Taken from [ISLISP](http://www.islisp.info/) after it was suggested by [Pascal Costanza](http://www.p-cos.net/).
+
+### (LAX)
+
+The `LAX` method combination is intended for use in cases where you are handling your qualifiers in a custom method class and don't _really_ need a custom method combination, but you need the `STANDARD` method combination to quietly ignore your special qualifiers. (a la Closer’s [Filtered Functions](http://common-lisp.net/project/closer/filtered.html))
 
 ### (BASIC _operator_ &optional _identity-with-one-argument-p_ _order_)
 

@@ -7,6 +7,16 @@
    combination."
   `(call-method ,(first primary) ,(rest primary)))
 
+(define-method-combination lax ()
+  ((around (:around . *))
+   (before (:before . *))
+   (after (:after . *) :order :most-specific-last)
+   (primary * :required t))
+  "This combination allows (and ignores) additional method qualifiers after any
+   of the `STANDARD` qualifiers. It is useful if you are handling your
+   qualifiers in a custom method class."
+  (combine-standard-methods around before primary after))
+
 (define-method-combination basic
     (operator
      &optional identity-with-one-argument-p (order :most-specific-first))
