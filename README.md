@@ -4,8 +4,6 @@ Method combinations are one of the more obscure bits of Common Lisp. I think the
 
 This macro is to method combinations what MACROEXPAND is to macros. Given a function call form, it'll expand to the form used to call the methods.
 
-**NOTE**: This currently only works for CCL, but I imagine it will be fairly easy to port.
-
 For example, given:
 
 ```common-lisp
