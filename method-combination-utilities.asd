@@ -4,6 +4,9 @@
 (in-package #:method-combination-utilities.system)
 
 (defsystem method-combination-utilities
+  :description "Various method combinations and utilities to make it easy to
+                create new method combinations."
+  :long-description "See README.md"
   :author "Greg Pfeil <greg@technomadic.org>"
   :license "MIT"
   :depends-on (closer-mop)
