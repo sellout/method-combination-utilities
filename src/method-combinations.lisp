@@ -1,6 +1,6 @@
 (in-package #:method-combination-utilities)
 
-(define-method-combination nil ()
+(define-method-combination primary ()
   ((primary () :required t))
   "This simple method combination requires that no methods have any qualifiers.
    Methods are treated exactly like primary methods in the STANDARD method

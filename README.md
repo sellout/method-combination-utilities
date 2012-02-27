@@ -112,9 +112,9 @@ This example is simplified from pretty much the entire [nisp-standard-combinatio
 
 ## Method Combinations
 
-### (NIL)
+### (PRIMARY)
 
-The `NIL` method combination is a stripped-down version of the `STANDARD` method combination that _only_ allows primary methods. Taken from [ISLISP](http://www.islisp.info/) after it was suggested by [Pascal Costanza](http://www.p-cos.net/).
+The `PRIMARY` method combination is a stripped-down version of the `STANDARD` method combination that _only_ allows primary methods. Taken from [ISLISP](http://www.islisp.info/)’s `NIL` method combination (but renamed because CLs with package locks don't like it) after it was suggested by [Pascal Costanza](http://www.p-cos.net/).
 
 ### (LAX)
 
