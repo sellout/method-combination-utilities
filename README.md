@@ -34,9 +34,7 @@ This method just returns a list of `CALL-METHOD` forms, one for each method. EG:
 
 ```common-lisp
 (call-methods '(1 2 3))
-=> ((call-method 1)
-    (call-method 2)
-    (call-method 3)
+=> ((CALL-METHOD 1) (CALL-METHOD 2) (CALL-METHOD 3))
 ```
 
 ### (COMBINE-STANDARD-METHODS _primary-methods_ &optional _around-methods_ _before-methods_ _after-methods_)
