@@ -26,7 +26,7 @@ This can be extremely helpful both for users of method combinations and develope
 
 ## Definition Helpers
 
-### (CALL-METHODS methods)
+### (CALL-METHODS _methods_)
 
 This is `FLET`ed (or expanded in-line) in almost all method combinations, including [every `DEFINE-METHOD-COMBINATION` example in the spec](http://www.lispworks.com/documentation/lw50/CLHS/Body/m_defi_4.htm). The name isn't the best but it has a strong tradition.
 
