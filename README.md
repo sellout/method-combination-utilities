@@ -28,7 +28,7 @@ This can be extremely helpful both for users of method combinations and develope
 
 ### (CALL-METHODS _methods_)
 
-This is `FLET`ed (or expanded in-line) in almost all method combinations, including [every `DEFINE-METHOD-COMBINATION` example in the spec](http://www.lispworks.com/documentation/lw50/CLHS/Body/m_defi_4.htm). The name isn't the best but it has a strong tradition.
+This is `FLET`ed (or expanded in-line) in almost all method combinations, including [every `DEFINE-METHOD-COMBINATION` example in the spec](http://www.lispworks.com/documentation/lw50/CLHS/Body/m_defi_4.htm). The name isn't the best, but it has a strong tradition.
 
 This method just returns a list of `CALL-METHOD` forms, one for each method. EG:
 
@@ -80,6 +80,8 @@ This example converts the 55-line WRAPPING-STANDARD method combination from [arn
 ### (WRAP-PRIMARY-FORM _primary-form_ &optional _around-methods_ _before-methods_ _after-methods_)
 
 This is similar to `COMBINE-STANDARD-METHODS`, but it takes an already-computed primary form, rather than a list of primary methods. This is because it's fairly common to have some custom behavior for the primary methods and then combine it with the usual `:AROUND`/`:BEFORE`/`:AFTER` methods.
+
+This example is simplified from pretty much the entire [nisp-standard-combination.lisp](https://github.com/nixeagle/nisp/blob/master/old-util/nisp-standard-combination.lisp) file from the [nisp](https://github.com/nixeagle/nisp) project. Note that (based on the pathname), this combination (or at least the version I linked to) is probably obsolete.
 
 ```common-lisp
 (define-method-combination nisp-standard (&key hook)
