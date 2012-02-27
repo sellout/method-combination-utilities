@@ -15,7 +15,7 @@
   "This combination allows (and ignores) additional method qualifiers after any
    of the `STANDARD` qualifiers. It is useful if you are handling your
    qualifiers in a custom method class."
-  (combine-standard-methods around before primary after))
+  (combine-standard-methods primary around before after))
 
 (define-method-combination basic
     (operator
@@ -40,14 +40,10 @@
       (error "~S is an invalid method.~@
               Its qualifier must be either :AROUND or ~S."
              invalid-method operator)))
-  (flet ((call-methods (methods)
-           (mapcar (lambda (method) `(call-method ,method)) methods)))
-    (let ((form (if (or (not identity-with-one-argument-p) (rest primary))
-                    `(,operator ,@(call-methods primary))
-                    `(call-method ,(first primary)))))
-      (if around
-          `(call-method ,(first around) (,@(rest around) (make-method ,form)))
-          form))))
+  (wrap-primary-form (if (or (not identity-with-one-argument-p) (rest primary))
+                         `(,operator ,@(call-methods primary))
+                         `(call-method ,(first primary)))
+                     around))
 
 (define-method-combination append/nconc (&optional order)
   ((around (:around))
@@ -58,17 +54,11 @@
    returns a list where the last cons can be modified. If all but the last
    primary methods specify `NCONC`, then `NCONC` will be used, otherwise,
   `APPEND`."
-  (flet ((call-methods (methods)
-           (mapcar (lambda (method) `(call-method ,method)) methods)))
-    (let ((form (if (rest primary)
-                    `(,(if (find '(append) (butlast primary)
-                                 :test #'equal :key #'method-qualifiers)
-                           'append
-                           'nconc)
-                       ,@(call-methods primary))
-                    `(call-method ,(first primary)))))
-      (if around
-          `(call-method ,(first around)
-                        (,@(rest around)
-                           (make-method ,form)))
-          form))))
+  (wrap-primary-form (if (rest primary)
+                         `(,(if (find '(append) (butlast primary)
+                                      :test #'equal :key #'method-qualifiers)
+                                'append
+                                'nconc)
+                            ,@(call-methods primary))
+                         `(call-method ,(first primary)))
+                     around))

@@ -24,7 +24,22 @@ the result should look something like:
 
 This can be extremely helpful both for users of method combinations and developers of them.
 
-## (COMBINE-STANDARD-METHODS _around_ _before_ _primary_ _after_)
+## Definition Helpers
+
+### (CALL-METHODS methods)
+
+This is `FLET`ed (or expanded in-line) in almost all method combinations, including [every `DEFINE-METHOD-COMBINATION` example in the spec](http://www.lispworks.com/documentation/lw50/CLHS/Body/m_defi_4.htm). The name isn't the best but it has a strong tradition.
+
+This method just returns a list of `CALL-METHOD` forms, one for each method. EG:
+
+```common-lisp
+(call-methods '(1 2 3))
+=> ((call-method 1)
+    (call-method 2)
+    (call-method 3)
+```
+
+### (COMBINE-STANDARD-METHODS _primary-methods_ &optional _around-methods_ _before-methods_ _after-methods_)
 
 In a lot of custom method combinations there is some attempt to keep the behavior of the `STANDARD` method combination. This function manages that portion of the method combination so other components can be layered on top.
 
@@ -58,10 +73,41 @@ This example converts the 55-line WRAPPING-STANDARD method combination from [arn
   ;; :WRAP-AROUND is similar to :AROUND and :WRAPPING is similar to primary, so
   ;; each pair can be concatenated and then we can just apply the standard
   ;; combination.
-  (combine-standard-methods (append wrap-around around)
+  (combine-standard-methods (append wrapping primary)
+                            (append wrap-around around)
                             before
-                            (append wrapping primary)
                             after))
+```
+
+### (WRAP-PRIMARY-FORM _primary-form_ &optional _around-methods_ _before-methods_ _after-methods_)
+
+This is similar to `COMBINE-STANDARD-METHODS`, but it takes an already-computed primary form, rather than a list of primary methods. This is because it's fairly common to have some custom behavior for the primary methods and then combine it with the usual `:AROUND`/`:BEFORE`/`:AFTER` methods.
+
+```common-lisp
+(define-method-combination nisp-standard (&key hook)
+  ((defaulting (:defaulting) :order :most-specific-last)
+   (meta-around (:meta-around))
+   (around (:around))
+   (before (:before))
+   (primary () :required t)
+   (after (:after) :order :most-specific-last))
+  "This behaves similarly to `STANDARD`, but wraps the whole thing with
+  :DEFAULTING (most-recent-last) and :META-AROUND methods. Also, if a HOOK is
+   passed, the primary methods are treated as in the BASIC combination, with
+   HOOK as the operator.
+
+  (defaulting
+    (meta-around
+      (around
+        (before)
+        (primary)
+        (after))))"
+  (wrap-primary-form (if hook
+                         `(,hook ,@(call-methods primary))
+                         `(call-method ,(first primary) ,(rest primary)))
+                     (append defaulting meta-around around)
+                     before
+                     after))
 ```
 
 ## Method Combinations
