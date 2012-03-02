@@ -12,7 +12,7 @@
    generated primary form rather than a list of primary methods. This is because
    it is fairly common for a method combination to deal with primary methods in
    some specialized way, then combine them with normal :AROUND/:BEFORE/:AFTER
-   methods. See the BASIC and APPEND/CONC combinations in this package for
+   methods. See the BASIC and APPEND/NCONC combinations in this package for
    examples."
   (let ((form (if (or before-methods after-methods)
                   `(multiple-value-prog1
