@@ -17,8 +17,9 @@
                (:file "method-combination-expand" :depends-on ("package")))
   :in-order-to ((test-op (load-op method-combination-utilities.tests)))
   :perform (test-op :after (op c)
-                    (funcall (intern "RUN!" :list-it.tests)
-                             (intern "TESTS" :list-it.tests))))
+                    (funcall (intern "RUN!" :method-combination-utilities.tests)
+                             (intern (string '#:define-method-combination)
+                                     :method-combination-utilities.tests))))
 
 (defmethod operation-done-p
     ((op test-op) (c (eql (find-system '#:method-combination-utilities))))
@@ -30,6 +31,7 @@
   :depends-on (method-combination-utilities fiveam)
   :pathname "tests/"
   :components ((:file "package")
-               (:file "definition-helpers" :depends-on ("package"))
-               (:file "method-combinations" :depends-on ("package"))
-               (:file "method-combination-expand" :depends-on ("package"))))
+               (:file "define-method-combination-tests" :depends-on ("package")
+                      :description "These tests do not test the utilities, but
+                                    rather test the Lisp's implementation of
+                                    DEFINE-METHOD-COMBINATION.")))
