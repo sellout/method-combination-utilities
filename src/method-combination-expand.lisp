@@ -1,6 +1,7 @@
 (in-package #:method-combination-utilities)
 
 (defun method-combination-expander-function (method-combination)
+  (declare (ignorable method-combination))
   #+ccl (cdr (ccl::method-combination-expander method-combination))
   #+clisp (clos::method-combination-expander method-combination)
   #+cmucl (slot-value method-combination 'pcl::function)
@@ -10,6 +11,7 @@
   (error "this function is not available on ~A" (lisp-implementation-type)))
 
 (defun method-combination-expansion-form (expander gf mc methods)
+  (declare (ignorable expander gf mc methods))
   #+ccl `(funcall ,expander ,gf ,methods ,(ccl::method-combination-options mc))
   #+clisp `(values (funcall ,expander
                             ,gf
