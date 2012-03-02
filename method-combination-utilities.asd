@@ -9,7 +9,7 @@
   :long-description "See README.md"
   :author "Greg Pfeil <greg@technomadic.org>"
   :license "MIT"
-  :depends-on (closer-mop)
+  :depends-on (#-abcl closer-mop)
   :pathname "src/"
   :components ((:file "package")
                (:file "definition-helpers" :depends-on ("package"))
