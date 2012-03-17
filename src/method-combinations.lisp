@@ -21,6 +21,8 @@
     (operator
      &optional identity-with-one-argument-p (order :most-specific-first))
   ((around (:around))
+   (before (:before))
+   (after (:after))
    (primary (*) :order order :required t))
   "This combination removes the need for the built-in combinations (other than
    STANDARD) and the short form of DEFINE-METHOD-COMBINATION.
@@ -31,7 +33,8 @@
  * can specify an arbitrary operator without having to first
    DEFINE-METHOD-COMBINATION
  * IDENTITY-WITH-ONE-ARGUMENT[-P] is now specified at usage rather than
-   definition"
+   definition
+ * :BEFORE and :AFTER methods are allowed."
   (let ((invalid-method (find-if-not (lambda (qualifiers)
                                        (equal (list operator) qualifiers))
                                      primary
@@ -43,7 +46,9 @@
   (wrap-primary-form (if (or (not identity-with-one-argument-p) (rest primary))
                          `(,operator ,@(call-methods primary))
                          `(call-method ,(first primary)))
-                     around))
+                     around
+                     before
+                     after))
 
 (define-method-combination append/nconc (&optional order)
   ((around (:around))
