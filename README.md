@@ -30,7 +30,7 @@ This can be extremely helpful both for users of method combinations and develope
 
 This is `FLET`ed (or expanded in-line) in almost all method combinations, including [every `DEFINE-METHOD-COMBINATION` example in the spec](http://www.lispworks.com/documentation/lw50/CLHS/Body/m_defi_4.htm). The name isn't the best, but it has a strong tradition.
 
-This method just returns a list of `CALL-METHOD` forms, one for each method. EG:
+This function just returns a list of `CALL-METHOD` forms, one for each method passed in. EG:
 
 ```common-lisp
 (call-methods '(1 2 3))
