@@ -2,13 +2,17 @@
 
 (defun method-combination-expander-function (method-combination)
   (declare (ignorable method-combination))
-  #+ccl (cdr (ccl::method-combination-expander method-combination))
-  #+clisp (clos::method-combination-expander method-combination)
-  #+cmucl (slot-value method-combination 'pcl::function)
-  #+sbcl (gethash (sb-pcl::method-combination-type-name method-combination)
-                  sb-pcl::*long-method-combination-functions*)
-  #-(or ccl clisp cmucl sbcl)
-  (error "this function is not available on ~A" (lisp-implementation-type)))
+  (or
+   #+ccl (handler-case
+             (cdr (ccl::method-combination-expander method-combination))
+           (ccl::no-applicable-method-exists () nil))
+   #+clisp (clos::method-combination-expander method-combination)
+   #+cmucl (slot-value method-combination 'pcl::function)
+   #+sbcl (gethash (sb-pcl::method-combination-type-name method-combination)
+                   sb-pcl::*long-method-combination-functions*)
+   #-(or ccl clisp cmucl sbcl)
+   (error "this function is not available on ~A" (lisp-implementation-type))
+   (error "could not find a expander function for ~S" method-combination)))
 
 (defun method-combination-expansion-form (expander gf mc methods)
   (declare (ignorable expander gf mc methods))
